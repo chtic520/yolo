@@ -1,0 +1,137 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_red_net.jpg")
+	div.body
+		div.body-top
+			form#searchForm(method="get", action="/webstar/search")
+				input#tagVal(type="hidden", name="tag", value=tagVal)
+				input#platformVal(type="hidden", name="platform", value=platformVal)
+				input#fanMax(type="hidden", name="fanMax", value=fanMax)
+				input#fanMin(type="hidden", name="fanMin", value=fanMin)
+				input#page(type="hidden", name="page", value=currentPage)
+			div.section-top(style="background-color:#eeeeee;")
+				.container
+					div.tagTab
+						each tagCat in tagCategory
+							if tagCat.displayindex
+								div.tab-item
+									.tab-title
+										h3
+											span(style="background-image: url('#{tagCat.pic}')") #{tagCat.name}
+									.tab-content
+										each tag, index in tagCat.tag
+											if (index + 1) % 4 == 0 || index == (tagCat.tag.length - 1)
+												if tag._id == tagVal
+													a.tag.active.nb(id="#{tag._id}") #{tag.name}
+												else
+													a.tag.nb(id="#{tag._id}") #{tag.name}
+											else
+												if tag._id == tagVal
+													a.tag.active(id="#{tag._id}") #{tag.name}
+												else
+													a.tag(id="#{tag._id}") #{tag.name}
+			div.section-category
+				.container
+					div.category-box2
+						span 网红平台：
+						if platformVal == 0
+							a.active.platform 全部
+						else
+							a.platform 全部
+						each pf in platform
+							if platformVal == pf._id
+								a.active.platform(id="#{pf._id}") #{pf.name}
+							else
+								a.platform(id="#{pf._id}") #{pf.name}
+					div.category-box2
+						span 网红粉丝：
+						if !fanMax && !fanMin
+							a.active.fans 不限
+						else
+							a.fans 不限
+						if !fanMax && fanMin == 200
+							a.active.fans(data-min="200") 200万以上
+						else
+							a.fans(data-min="200") 200万以上
+						if fanMax==200 && fanMin == 50
+							a.active.fans(data-min="50", data-max="200") 200-50万
+						else
+							a.fans(data-min="50", data-max="200") 200-50万
+						if fanMax == 50 && fanMin == 20
+							a.active.fans(data-min="20", data-max="50") 50-20万
+						else
+							a.fans(data-min="20", data-max="50") 50-20万
+						if fanMax == 20 && fanMin == 10
+							a.active.fans(data-min="10", data-max="20") 20-10万
+						else
+							a.fans(data-min="10", data-max="20") 20-10万
+						if fanMax == 10 && fanMin == 5
+							a.active.fans(data-min="5", data-max="10") 10-5万
+						else
+							a.fans(data-min="5", data-max="10") 10-5万
+						if fanMax == 5 && fanMin == 1
+							a.active.fans(data-min="1", data-max="5") 5-1万
+						else
+							a.fans(data-min="1", data-max="5") 5-1万
+						if fanMax == 1 && !fanMin
+							a.active.fans(data-max="1") 1万以下
+						else
+							a.fans(data-max="1") 1万以下
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.webstar-list
+			div.section-body
+				div.container
+					div.section-display-box
+						each webstar in webstars
+							div.item-list.item-3
+								div.webstar-container
+									//- div.webstar-pic
+									//- 	img(src="#{webstar.pic}")
+									div.webstar-pic.flip-container
+										div.flipper
+											div.front
+												img(src="#{webstar.pic}")
+											div.back!=webstar.summary
+									div.webstar-info
+										h3
+											span #{webstar.name}
+											button.btn 预约
+										div.row
+											div.item-list.item-6
+												p 粉丝
+												p #{webstar.funs}
+											div.item-list.item-6
+												p 平均播放数
+												p #{webstar.averplay}
+		div.section-pagination
+			.container
+				div.pagination.webstar-pagination
+					- if(currentPage == 0){
+							a.pre.disabled <
+					- }else{
+							a.pre.live(data-page="#{currentPage - 1}") <
+					- }
+					- for(var i = 0; i < totalPage; i++){
+						- if(currentPage == i){
+								a.active
+									span #{currentPage + 1}
+						- }else{
+								a.live(data-page="#{i}")
+									span #{i + 1}
+						- }
+					- }
+					- if(currentPage == totalPage - 1){
+							a.next.disabled >
+					- }else{
+							a.next.live(data-page="#{currentPage + 1}") >
+					- }
+	script(src="/js/front.js", defer="defer")
+	script(src="/js/webstar.js", defer="defer")

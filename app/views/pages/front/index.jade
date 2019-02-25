@@ -1,0 +1,254 @@
+extends ../../layout
+
+block content
+	div.banner
+		div#banner.carousel.slide(data-ride="carousel")
+			ol.carousel-indicators
+				each ibanner, index in banner
+					if index == 0
+						li.active(data-target="#banner", data-slide-to="#{index}")
+					else
+						li(data-target="#banner", data-slide-to="#{index}")
+			div.carousel-inner(role="listbox")
+				each ibanner, index in banner
+					if index == 0
+						div.item.active
+							img(style="width:100%;height:680px", src="#{ibanner.pic}")
+							div.carousel-caption
+								h3 #{ibanner.title}
+								p #{ibanner.subtitle}
+					else
+						div.item
+							img(style="width:100%;height:680px", src="#{ibanner.pic}")
+							div.carousel-caption
+								h3 #{ibanner.title}
+								p #{ibanner.subtitle}
+	div.body
+		div.section.case
+			div.section-header
+				div.container
+					h3.section-title 案例展示
+					ol.section-subtitle
+						li 快销
+						li 品牌
+						li 房产
+						li 服装
+			div.section-body
+				div.container
+					div.section-display-box
+						each icase in cases
+							if icase.displayindex
+								div.item-list.item-3
+									div.case-container
+										img.case-bg(src="#{icase.pic}")
+										div.case-content
+											dl.dl-horizontal
+												dt 展现次数：
+												dd #{icase.displaytimes}
+												dt 投放平台：
+												dd #{icase.platform}
+												dt 适合场景：
+												dd #{icase.scene}
+												dt 案例特色：
+												dd!=icase.summary
+			div.section-footer
+				div.container
+					a.more-link(href="/cases") 更多案例 >
+		div.section.star
+			div.section-header
+				div.container
+					h3.section-title 明星资源
+					ol.section-subtitle
+						li 娱乐
+						li 综艺
+						li 主持
+						li 歌手
+						li 演员
+			div.section-body
+				div.container
+					div.section-display-box
+						each star in stars
+							if star.displayindex
+								div.item-list.item-3
+									div.star-container
+										div.star-pic.flip-container
+											div.flipper
+												div.front
+													img(src="#{star.pic}")
+												div.back!=star.summary
+										div.star-info
+											h3
+												span #{star.name}
+												//- button.btn 预约
+												a.btn(href="/connectus") 预约
+											p 代表作品
+											p #{star.works}
+			div.section-footer
+				div.container
+					a.more-link(href="/star") 更多明星 >
+		div.section.webstar
+			div.section-header
+				div.container
+					h3.section-title.brand 品牌推广
+					ol.section-subtitle
+						li 手表
+						li 首饰
+						li 旅游
+						li 景区
+					h3.section-title.web 网络推广
+					ol.section-subtitle
+						li 家居家纺
+						li 男装
+						li 女装
+						li 彩妆
+					h3.section-title.app APP推广
+					ol.section-subtitle
+						li 时尚购物
+						li O2O
+						li 美食
+						li 旅游
+					h3.section-title.game 游戏推广
+					ol.section-subtitle
+						li 手游
+						li 页游
+						li 端游
+			div.section-body
+				div.container
+					div.section-display-box
+						each webstar in webstars
+							if webstar.displayindex
+								div.item-list.item-3
+									div.webstar-container
+										div.webstar-pic.flip-container
+											div.flipper
+												div.front
+													img(src="#{webstar.pic}")
+												div.back!=webstar.summary
+										//- div.webstar-pic
+										//- 	img(src="#{webstar.pic}")
+										div.webstar-info
+											h3
+												span #{webstar.name}
+												a.btn(href="/connectus") 预约
+											div.row
+												div.item-list.item-6
+													p 粉丝
+													p #{webstar.funs}
+												div.item-list.item-6
+													p 平均播放数
+													p #{webstar.averplay}
+			div.section-footer
+				div.container
+					a.more-link(href="/webstar") 更多网红 >
+		div.section.wemedia
+			div.section-header
+				div.container
+					h3.section-title 新微媒体
+					ol.section-subtitle
+						li 微信公众号
+						li 微博
+						li 网站媒体
+			div.section-body
+				div.container
+					div.section-display-box
+						div.item-list.item-4
+							div.wemedia-container
+								a.wemedia-pic(href="/wemedia/wechat")
+									img(src="/images/wechat.jpg")
+								div.wemedia-info
+									each itag,index in wechatTag
+										if index < 4
+											if index == 0
+												a.frist(href="/wemedia/wechat/search?category=#{itag._id}&page=0") #{itag.name}
+											else
+												a(href="/wemedia/wechat/search?category=#{itag._id}&page=0") #{itag.name}
+						div.item-list.item-4
+							div.wemedia-container
+								a.wemedia-pic(href="/wemedia/webo")
+									img(src="/images/webo.jpg")
+								div.wemedia-info
+									each itag,index in weboTag
+										if index < 4
+											if index == 0
+												a.frist(href="/wemedia/webo/search?category=#{itag._id}&page=0") #{itag.name}
+											else
+												a(href="/wemedia/webo/search?category=#{itag._id}&page=0") #{itag.name}
+						div.item-list.item-4
+							div.wemedia-container
+								a.wemedia-pic(href="/wemedia/wesite")
+									img(src="/images/wesite.jpg")
+								div.wemedia-info
+									each itag,index in wesiteTag
+										if index < 4
+											if index == 0
+												a.frist(href="/wemedia/wesite/search?category=#{itag._id}&page=0") #{itag.name}
+											else
+												a(href="/wemedia/wesite/search?category=#{itag._id}&page=0") #{itag.name}
+			div.section-footer
+				div.container
+					a.more-link(href="/wemedia/wechat") 更多媒体 >
+		div.section.stage
+			div.section-header
+				div.container
+					h3.section-title 舞美设备
+					ol.section-subtitle
+						li 灯光音响
+						li 舞台道具
+						li 现场布置
+			div.section-body
+				div.container
+					div.section-display-box
+						each stageCat in categorystage
+							if stageCat.displayindex
+								div.item-list.item-4
+									div.stage-container
+										div.stage-pic
+											img(src="#{stageCat.pic}")
+										div.stage-info
+											h3
+												span #{stageCat.name}
+												//- a.btn(href="/stage/search?category=#{stageCat._id}&page=0") 租赁
+												a.btn(href="/connectus") 租赁
+			div.section-footer
+				div.container
+					a.more-link(href="/stage") 更多设备 >
+		div.section.news
+			div.section-header
+				div.container
+					h3.section-title.brand 最新资讯
+					ol.section-subtitle
+						li 时事热点
+						li 有乐
+						li 活动回顾
+			div.section-body
+				div.container
+					div.section-display-box
+						each inew in news
+							if inew.displayindex
+								div.item-list.item-12
+									div.row
+										div.news-pic
+											img(src="#{inew.pic}")
+										div.news-info
+											h3 #{inew.title}
+											div
+												a(href="/news/#{inew._id}")!=inew.content
+			div.section-footer
+				div.container
+					a.more-link(href="/news") 更多资讯 >
+		div.cooperation
+			div.container
+				div.cooperation-header
+					div.line
+					h3.section-title 合作客户
+					div.line
+				div.cooperation-body.section-display-box
+					each icoop in cooperation
+						if icoop.displayindex
+							div.item-list.item-4
+								a(href="#{icoop.link}")
+									img(src="#{icoop.pic}")
+	script(src="/js/front.js", defer="defer")
+	script(src="/js/index.js", defer="defer")
+
+

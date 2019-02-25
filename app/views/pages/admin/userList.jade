@@ -1,0 +1,75 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 用户列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/users/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#updateRole(type="button", data-href="/admin/users/updater/") 修改权限
+								button.btn.btn-info.btn-flat.btn-xs#updatePassword(type="button", data-href="/admin/users/updatep/") 修改密码
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#id(type="hidden")
+						table#casesTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 登录名
+									th 权限值
+									th 创建时间
+							tbody.datalist
+								each user in users
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=user._id, data-pw="#{user.password}", data-userrole="#{user.role}", data-name="#{user.name}")
+										td #{user.name}
+										td #{user.role}
+										td #{moment(user.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+	#update_r.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 修改权限
+				.modal-body
+					form.form-horizontal
+						.form-group
+							label.col-sm-2.control-label *登录名
+							.col-sm-10
+								input.form-control#username_r(type="text", placeholder="登录名", disabled)
+						.form-group
+							label.col-sm-2.control-label 权限值
+							.col-sm-10
+								input.form-control#role(type="text", placeholder="0-50")
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#r(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	#update_p.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 修改密码
+				.modal-body
+					form.form-horizontal
+						.form-group
+							label.col-sm-2.control-label *登录名
+							.col-sm-10
+								input.form-control#username_p(type="text", placeholder="登录名", disabled)
+						.form-group
+							label.col-sm-2.control-label *新密码
+							.col-sm-10
+								input.form-control#newpassword(type="password", placeholder="密码（6-30位）")
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#p(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/js/usersList.js", defer="defer")

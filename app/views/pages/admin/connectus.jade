@@ -1,0 +1,42 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 公司信息
+						.box-tools
+							.btn-toolbar
+								if connectus._id
+									a.btn.btn-warning.btn-flat.btn-xs(href="/admin/connectus/update/#{connectus._id}") 修改
+								else
+									a.btn.btn-success.btn-flat.btn-xs(href="/admin/connectus/new") 新增
+					.box-body
+						strong
+							i.fa.fa-phone.margin-r-5
+							| 电话
+						p=connectus.tel
+						hr
+						strong
+							i.fa.fa-map-marker.margin-r-5
+							| 地址
+						p=connectus.address
+						hr
+						strong
+							i.fa.fa-envelope.margin-r-5
+							| 邮箱
+						p=connectus.email
+						hr
+						strong
+							i.fa.fa-file-text-o.margin-r-5
+							| 简介
+						p=connectus.content

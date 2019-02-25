@@ -1,0 +1,62 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 案例列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/cases/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/cases/update/") 修改
+								a.btn.btn-info.btn-flat.btn-xs#tagManage(href="/admin/cases/category") 标签管理
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#casesTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 案例名称
+									th 展现次数
+									th 投放平台
+									th 投放形式
+									th 标签
+									th 背景图片
+									th 创建时间
+									th 首页展示
+							tbody.datalist
+								each icase in cases
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=icase._id)
+										td #{icase.title}
+										td #{icase.displaytimes}
+										td #{icase.platform}
+										td #{icase.form}
+										td
+											if icase.category && icase.category.length > 0
+												each tag in icase.category
+													span.label.label-info #{tag.name}
+													| &nbsp;
+											else
+												| 未添加标签
+										td
+											img.thumImg(src="#{icase.pic}", width="100px", height="22px")
+										td #{moment(icase.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+										td
+											if icase.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{icase._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{icase._id}")
+	script(src="/js/casesList.js", defer="defer")

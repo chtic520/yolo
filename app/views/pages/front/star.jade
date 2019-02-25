@@ -1,0 +1,95 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_superstar.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					h3
+						span.icon-star 明星资源
+			div.section-category
+				.container
+					div.category-box
+						if keyword == 1
+							a.first.active
+								span 全部
+						else
+							a.first(href="/star")
+								span 全部
+						each cate in category
+							if keyword.name == cate.name
+								a.active
+									span #{cate.name}
+							else
+								a(href="/star/search?category=#{cate._id}&page=0")
+									span #{cate.name}
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.star
+			div.section-body
+				div.container
+					div.section-display-box
+						each star in stars
+							div.item-list.item-3
+								div.star-container
+									div.star-pic.flip-container
+										div.flipper
+											div.front
+												img(src="#{star.pic}")
+											div.back!=star.summary
+									div.star-info
+										h3
+											span #{star.name}
+											button.btn 预约
+										p 代表作品
+										p #{star.works}
+		div.section-pagination
+			.container
+				div.pagination
+					- if(keyword == 1){
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/star?page=#{currentPage - 1}") <
+						- }
+					- }else{
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/star/search?category=#{keyword._id}&page=#{currentPage - 1}") <
+						- }
+					- }
+					- for(var i = 0; i < totalPage; i++){
+						- if(currentPage == i){
+								a.active
+									span #{currentPage + 1}
+						- }else{
+								if keyword == 1
+									a(href="/star?page=#{i}")
+										span #{i + 1}
+								else
+									a(href="/star/search?category=#{keyword._id}&page=#{i}")
+										span #{i + 1}
+						- }
+					- }
+					- if(keyword == 1){
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/star?page=#{currentPage + 1}") >
+						- }
+					- }else{
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/star/search?category=#{keyword._id}&page=#{currentPage + 1}") >
+						- }
+					- }
+	script(src="/js/front.js", defer="defer")

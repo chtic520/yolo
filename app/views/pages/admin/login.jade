@@ -1,0 +1,31 @@
+extends ../../userLayout
+
+block content
+	div.login-box
+		div.login-logo
+			a(href="/") LOGO
+		div.login-box-body(style="margin-bottom: 10px;")
+			p.login-box-msg 登录
+			form
+				div.form-group.has-feedback
+					input.form-control#username(type="text", placeholder="登录名", autofocus="autofocus")
+					span.fa.fa-user.form-control-feedback
+				div.form-group.has-feedback
+					input.form-control#password(type="password", placeholder="密码")
+					span.fa.fa-lock.form-control-feedback
+				div.row
+					//- div.col-xs-8
+					//- 	div.checkbox.icheck
+					//- 		label
+					//- 			input.i-checks(type="checkbox")
+					//- 			|  记住我
+					div.col-xs-4.col-xs-offset-8
+						button.btn.btn-primary.btn-block.btn-flat#login(type="submit") 登录
+			div.row(style="margin-top: 10px;")
+				div.col-xs-6
+					a#forget 忘记密码？
+				div.col-xs-6
+					a.pull-right(href="/register") 注册
+		div#msg
+	script(src="/js/login.js", defer="defer")
+		

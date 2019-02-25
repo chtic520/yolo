@@ -1,0 +1,59 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/webstar/list") 网红推荐
+			li
+				a.text-info(href="/admin/webstar/category") 网红标签
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/webstar/category")
+				if category._id
+					input(type="hidden", name="category[_id]", value=category._id)
+				.form-group
+					label.col-sm-2.control-label *名字
+					.col-sm-10
+						input.form-control#name(type="text", placeholder="标签名", name="category[name]", value=category.name)
+				.form-group
+					label.col-sm-2.control-label 分类
+					.col-sm-10
+						div.input-group
+							div.form-control#tagCategoryBox
+								if category.tagCategory && category.tagCategory.length > 0
+									each tag in category.tagCategory
+										span.label.label-info
+											| #{tag.name}
+											input(type="hidden" name="category[tagCategory]" value="#{tag._id}")
+										| &nbsp;
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#tagModal") 更换
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 录入
+	#tagModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 选择分类
+				.modal-body
+					div.row#tagList
+						if tagCategory && tagCategory.length > 0
+							each item in tagCategory
+								div.col-sm-2
+									label
+										input(type="radio" class="tag" id="#{item._id}")
+										| &nbsp;
+										span #{item.name}
+						if !tagCategory || tagCategory.length == 0
+							div.col-sm-10.no-tag
+								p.text-danger 还没有配置分类
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#t(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/js/webstarCategoryForm.js", defer="defer")

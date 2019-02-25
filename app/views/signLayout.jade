@@ -1,0 +1,17 @@
+doctype
+html(style="font-size: 15px;")
+	head
+		meta(charset="utf-8")
+		title #{title}
+		style.
+			body{
+				background-image: url('../images/memberBodyBg.jpg');
+				background-repeat: no-repeat;
+				background-position: center top;
+				background-size: cover;
+				padding: 2.2rem 2.4rem;
+			}
+		include ./includes/head
+	body
+		include ./includes/header
+		block content

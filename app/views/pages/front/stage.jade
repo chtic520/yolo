@@ -1,0 +1,90 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_music.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					h3
+						span.icon-stage 舞美设备
+			div.section-category
+				.container
+					div.category-box
+						if keyword == 1
+							a.first.active
+								span 全部
+						else
+							a.first(href="/stage")
+								span 全部
+						each cate in category
+							if keyword.name == cate.name
+								a.active
+									span #{cate.name}
+							else
+								a(href="/stage/search?category=#{cate._id}&page=0")
+									span #{cate.name}
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.stage
+			div.section-body
+				div.container
+					div.section-display-box
+						each stage in stages
+							div.item-list.item-4
+								div.stage-container
+									div.stage-pic
+										img(src="#{stage.pic}")
+									div.stage-info
+										h3
+											span=stage.name
+											a.btn(href="/connectus") 租赁
+		div.section-pagination
+			.container
+				div.pagination
+					- if(keyword == 1){
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/stage?page=#{currentPage - 1}") <
+						- }
+					- }else{
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/stage/search?category=#{keyword._id}&page=#{currentPage - 1}") <
+						- }
+					- }
+					- for(var i = 0; i < totalPage; i++){
+						- if(currentPage == i){
+								a.active
+									span #{currentPage + 1}
+						- }else{
+								if keyword == 1
+									a(href="/stage?page=#{i}")
+										span #{i + 1}
+								else
+									a(href="/stage/search?category=#{keyword._id}&page=#{i}")
+										span #{i + 1}
+						- }
+					- }
+					- if(keyword == 1){
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/stage?page=#{currentPage + 1}") >
+						- }
+					- }else{
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/stage/search?category=#{keyword._id}&page=#{currentPage + 1}") >
+						- }
+					- }
+	script(src="/js/front.js", defer="defer")

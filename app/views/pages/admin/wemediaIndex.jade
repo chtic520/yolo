@@ -1,0 +1,105 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-sm-4
+				div.box.box-widget.widget-user
+					div.widget-user-header.bg-green-active
+						h3.widget-user-username
+							i.fa.fa-wechat
+							|  微信公众号
+						h5.widget-user-desc
+							each cat,index in catwechat
+								if index < 4
+									if index != 3
+										| #{cat.name}，
+									else
+										| #{cat.name}
+							if catwechat.length > 4
+								| 等等
+					div.widget-user-image
+						img.img-circle(src="/images/address.png")
+					div.box-footer
+						div.row
+							.col-sm-6.border-right
+								.description-block
+									h5.description-header #{wechat.length}
+									span.description-text 数量
+							.col-sm-6
+								.description-block
+									h5.description-header #{catwechat.length}
+									span.description-text 标签数
+					div.box-manager.bg-green-active
+						a(href="/admin/wemedia/wechat/list")
+							| 管理微信资源 
+							i.fa.fa-arrow-circle-right
+			.col-sm-4
+				div.box.box-widget.widget-user
+					div.widget-user-header.bg-red-active
+						h3.widget-user-username
+							i.fa.fa-weibo
+							|  微博
+						h5.widget-user-desc
+							each cat,index in catwebo
+								if index < 4
+									if index != 3
+										| #{cat.name}，
+									else
+										| #{cat.name}
+							if catwebo.length > 4
+								| 等等
+					div.widget-user-image
+						img.img-circle(src="/images/address.png")
+					div.box-footer
+						div.row
+							.col-sm-6.border-right
+								.description-block
+									h5.description-header #{webo.length}
+									span.description-text 数量
+							.col-sm-6
+								.description-block
+									h5.description-header #{catwebo.length}
+									span.description-text 标签数
+					div.box-manager.bg-red-active
+						a(href="/admin/wemedia/webo/list")
+							| 管理微博资源 
+							i.fa.fa-arrow-circle-right
+			.col-sm-4
+				div.box.box-widget.widget-user
+					div.widget-user-header.bg-aqua-active
+						h3.widget-user-username
+							i.fa.fa-globe
+							|  网站媒体
+						h5.widget-user-desc
+							each cat,index in catwesite
+								if index < 4
+									if index != 3
+										| #{cat.name}，
+									else
+										| #{cat.name}
+							if catwesite.length > 4
+								| 等等
+					div.widget-user-image
+						img.img-circle(src="/images/address.png")
+					div.box-footer
+						div.row
+							.col-sm-6.border-right
+								.description-block
+									h5.description-header #{wesite.length}
+									span.description-text 数量
+							.col-sm-6
+								.description-block
+									h5.description-header #{catwesite.length}
+									span.description-text 标签数
+					div.box-manager.bg-aqua-active
+						a(href="/admin/wemedia/wesite/list")
+							| 管理网站媒体 
+							i.fa.fa-arrow-circle-right

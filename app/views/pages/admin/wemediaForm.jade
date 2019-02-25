@@ -1,0 +1,131 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/wemedia/list") 新微媒体
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/wemedia/new")
+				if wemedia._id
+					input(type="hidden", name="wemedia[_id]", value=wemedia._id)
+				.form-group
+					label.col-sm-2.control-label *媒体名称
+					.col-sm-10
+						input.form-control#name(type="text", placeholder="输入媒体名称", name="wemedia[name]", value=wemedia.name)
+				.form-group
+					label.col-sm-2.control-label 粉丝数
+					.col-sm-10
+						input.form-control#funs(type="text", placeholder="粉丝数", name="wemedia[funs]", value=wemedia.funs)
+				.form-group
+					label.col-sm-2.control-label *所属平台
+					.col-sm-10
+						div.input-group
+							div.form-control#platformBox
+								if wemedia.platform && wemedia.platform.length > 0
+									each pf in wemedia.platform
+										span.label.label-info
+											| #{pf.name}
+											input(type="hidden" name="wemedia[platform]" value="#{pf._id}")
+										| &nbsp;
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#platformModal") 更换
+				.form-group
+					label.col-sm-2.control-label *标签
+					.col-sm-10
+						div.input-group
+							div.form-control#tagBox
+								if wemedia.category && wemedia.category.length > 0
+									each tag in wemedia.category
+										span.label.label-info
+											| #{tag.name}
+											input(type="hidden" name="wemedia[category]" value="#{tag._id}")
+										| &nbsp;
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#tagModal") 更换
+				.form-group
+					label.col-sm-2.control-label *icon
+					.col-sm-10
+						div.input-group
+							input.form-control#icon(type="text", placeholder="输入图片地址", name="wemedia[icon]", value=wemedia.icon, readonly)
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#uploadModal") 上传
+				.form-group
+					label.col-sm-2.control-label *媒体简介
+					.col-sm-10
+						textarea.form-control#summary(placeholder="输入内容", rows="3", name="wemedia[summary]") #{wemedia.summary}
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 录入
+	#uploadModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 上传icon
+				.modal-body
+					.row
+						.col-sm-12
+							div#thethum.thum-img
+								div.thum-img-body
+									span.thum-img-icon.has-img
+										img#imgupload
+									div.thum-img-info
+										span.thum-img-name
+											i.fa.fa-camera
+											span#imgtitle  icon标题
+										span#imgsize.thum-img-size icon大小
+								.btn-group.btn-group-justified
+									.btn-group
+										button.btn.btn-success.btn-flat.btn-sm#addfile 选择文件
+									.btn-group
+										button.btn.btn-warning.btn-flat.btn-sm#uploadBtn(type="button") 开始上传
+				.modal-footer
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	#tagModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 选择标签
+				.modal-body
+					div.row#tagList
+						if category && category.length > 0
+							each item in category
+								div.col-sm-2
+									label
+										input(type="checkbox" name="pt" class="tag" id="#{item._id}")
+										| &nbsp;
+										span #{item.name}
+						div.col-sm-2
+							button.btn.btn-xs.btn-info.btn-flat#addTag
+								i.fa.fa-plus
+						if !category || category.length == 0
+							div.col-sm-10.no-tag
+								p.text-danger 还没有标签，请按 “+” 添加
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#t(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	#platformModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 选择平台
+				.modal-body
+					div.row#platformList
+						if platform && platform.length > 0
+							each item in platform
+								div.col-sm-2
+									label
+										input(type="radio" name="pt" class="tag" id="#{item._id}")
+										| &nbsp;
+										span #{item.name}
+						if !platform || platform.length == 0
+							div.col-sm-10.no-tag
+								p.text-danger 还没有配置任何平台
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#p(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/libs/admin-lte/plugins/ckeditor/ckeditor.js")
+	script(src="/js/wemediaForm.js", defer="defer")

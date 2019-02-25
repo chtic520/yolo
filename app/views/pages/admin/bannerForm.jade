@@ -1,0 +1,57 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/banner/new")
+				if banner._id
+					input(type="hidden", name="banner[_id]", value=banner._id)
+				.form-group
+					label.col-sm-2.control-label *标题
+					.col-sm-10
+						input.form-control#title(type="text", placeholder="输入标题", name="banner[title]", value=banner.title)
+				.form-group
+					label.col-sm-2.control-label 副标题
+					.col-sm-10
+						input.form-control#subtitle(type="text", placeholder="副标题", name="banner[subtitle]", value=banner.subtitle)
+				.form-group
+					label.col-sm-2.control-label *图片
+					.col-sm-10
+						div.input-group
+							input.form-control#pic(type="text", placeholder="输入图片地址", name="banner[pic]", value=banner.pic, readonly)
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#uploadModal") 上传
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 录入
+	#uploadModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 上传图片
+				.modal-body
+					.row
+						.col-sm-12
+							div#thethum.thum-img
+								div.thum-img-body
+									span.thum-img-icon.has-img
+										img#imgupload
+									div.thum-img-info
+										span.thum-img-name
+											i.fa.fa-camera
+											span#imgtitle  图片标题
+										span#imgsize.thum-img-size 图片大小
+								.btn-group.btn-group-justified
+									.btn-group
+										button.btn.btn-success.btn-flat.btn-sm#addfile 选择文件
+									.btn-group
+										button.btn.btn-warning.btn-flat.btn-sm#uploadBtn(type="button") 开始上传
+				.modal-footer
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/js/bannerForm.js", defer="defer")

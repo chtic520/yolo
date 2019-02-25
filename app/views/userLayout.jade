@@ -1,0 +1,44 @@
+doctype
+html
+	head
+		meta(charset="utf-8")
+		title #{title}
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+		meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport")
+		link(href="/libs/admin-lte/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/libs/font-awesome-4.7.0/css/font-awesome.min.css", rel="stylesheet")
+		link(href="/libs/admin-lte/dist/css/AdminLTE.min.css", rel="stylesheet")
+		link(href="/libs/admin-lte/dist/css/skins/skin-red.min.css", rel="stylesheet")
+		link(href="/libs/admin-lte/plugins/iCheck/all.css", rel="stylesheet")
+		link(href="/style/common.css", rel="stylesheet")
+	body.hold-transition.login-page(style="height: auto;")
+		block content
+script(src="/libs/jquery/dist/jquery.min.js")
+script(src="/libs/bootstrap/dist/js/bootstrap.min.js")
+script(src="/libs/layer/layer.js")
+script(src="/libs/admin-lte/plugins/iCheck/icheck.min.js")
+script.
+	$(".i-checks").iCheck({
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_square-blue'
+	});
+
+	function getQuery(str, uri){
+		var uri = uri || window.location.href,
+		search;
+
+		var arr = uri.split('?')
+
+		if(arr.length > 1){
+			search = arr[1]
+		}else{return false;}
+
+		search = search.split('&');
+
+		for (var i = 0; i < search.length; i++) {
+			if(search[i].indexOf(str) != -1){
+				return search[i].split('=')[1];
+				break;
+			}
+		}
+	}

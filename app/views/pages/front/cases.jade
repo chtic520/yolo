@@ -1,0 +1,109 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_case.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					h3
+						span.icon-case 案例分类
+			div.section-category
+				.container
+					div.category-box
+						if keyword == 1
+							a.first.active
+								span 全部
+						else
+							a.first(href="/cases")
+								span 全部
+						each cate in category
+							if keyword.name == cate.name
+								a.active
+									span #{cate.name}
+							else
+								a(href="/cases/search?category=#{cate._id}&page=0")
+									span #{cate.name}
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.case
+			div.section-body
+				div.container
+					div.section-display-box
+						each icase in cases
+							div.item-list.item-3
+								div.case-container
+									img.case-bg(src="#{icase.pic}")
+									div.case-content
+										dl.dl-horizontal
+											dt 展现次数：
+											dd #{icase.displaytimes}
+											dt 投放平台：
+											dd #{icase.platform}
+											dt 适合场景：
+											dd #{icase.scene}
+											dt 案例特色：
+											dd!=icase.summary
+		div.section-pagination
+			.container
+				div.pagination
+					- if(keyword == 1){
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/cases?page=#{currentPage - 1}") <
+						- }
+					- }else{
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/cases/search?category=#{keyword._id}&page=#{currentPage - 1}") <
+						- }
+					- }
+					- for(var i = 0; i < totalPage; i++){
+						- if(currentPage == i){
+								a.active
+									span #{currentPage + 1}
+						- }else{
+								if keyword == 1
+									a(href="/cases/search?page=#{i}")
+										span #{i + 1}
+								else
+									a(href="/cases/search?category=#{keyword._id}&page=#{i}")
+										span #{i + 1}
+						- }
+					- }
+					- if(keyword == 1){
+						- if(currentPage == totalPage -1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/cases?page=#{currentPage + 1}") >
+						- }
+					- }else{
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/cases/search?category=#{keyword._id}&page=#{currentPage + 1}") >
+						- }
+					- }
+		div.cooperation
+			div.container
+				div.cooperation-header
+					div.line
+					h3.section-title 合作客户
+					div.line
+				div.cooperation-body.section-display-box
+					each icoop in cooperation
+						if icoop.displayindex
+							div.item-list.item-4
+								a(href="#{icoop.link}")
+									img(src="#{icoop.pic}")
+	script(src="/js/front.js", defer="defer")
+
+

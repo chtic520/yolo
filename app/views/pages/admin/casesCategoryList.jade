@@ -1,0 +1,45 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/cases/list") 创意策划
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 案例标签列表
+						.box-tools
+							.btn-toolbar
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						table#casesTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 标签名称
+									th 案例
+									th 创建时间
+							tbody.datalist
+								each tag in category
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=tag._id)
+										td #{tag.name}
+										td
+											if tag.cases && tag.cases.length > 0
+												each item in tag.cases
+													span.label.label-info #{item.title}
+													| &nbsp;
+											else
+												| 未添加案例
+										td #{moment(tag.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+	script(src="/js/casesCategoryList.js", defer="defer")

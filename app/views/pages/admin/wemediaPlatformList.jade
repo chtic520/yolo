@@ -1,0 +1,58 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/wemedia/list") 新微媒体
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 新微媒体平台列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/wemedia/platform/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/wemedia/platform/update/") 修改
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#wemediaTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 平台名称
+									th 媒体
+									th 标签
+									th 创建时间
+									th 首页展示
+							tbody.datalist
+								each item in platform
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td
+											if item.wemedia && item.wemedia.length > 0
+												each wemedia in item.wemedia
+													span.label.label-info #{wemedia.name}
+													| &nbsp;
+											else
+												| 未添加媒体
+										td
+											each tag in item.tag
+												span #{tag} 
+										td #{moment(item.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+										td
+											if item.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{item._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{item._id}")
+	script(src="/js/wemediaPlatformList.js", defer="defer")

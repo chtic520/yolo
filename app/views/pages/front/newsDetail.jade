@@ -1,0 +1,38 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_news.jpg")
+	div.body
+		div.body-top
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						a(href="/news") 最新资讯
+						|  > 
+						span #{title}
+		div.section.news-detail-container
+			div.section-body
+				div.container
+					div.section-display-box
+						div.news-detail
+							h1 #{news.title}
+							p
+								span 作者：
+								span.author #{news.author}
+							p
+								span 发布时间：
+								span.timer #{moment(news.meta.updateAt).format('YYYY-MM-DD')}
+							div.news-content!=news.content
+							div.detail-footer
+								each item, index in allNews
+									if item._id == news._id
+										if index > 0
+											a(href="/news/#{allNews[index-1]._id}") < 上一篇
+										if index < (allNews.length - 1)
+											a(href="/news/#{allNews[index+1]._id}") > 下一篇
+	script(src="/js/front.js", defer="defer")
+	

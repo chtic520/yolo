@@ -1,0 +1,59 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 网红列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/webstar/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/webstar/update/") 修改
+								a.btn.btn-info.btn-flat.btn-xs#tagManage(href="/admin/webstar/category") 标签管理
+								a.btn.btn-info.btn-flat.btn-xs#platformManage(href="/admin/webstar/platform/list") 平台管理
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#webstarTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 名字（艺名）
+									th 粉丝数
+									th 平均播放次数
+									th 标签
+									th 图片
+									th 首页展示
+							tbody.datalist
+								each item in webstar
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td #{item.funs}
+										td #{item.averplay}
+										td
+											if item.category && item.category.length > 0
+												each tag in item.category
+													span.label.label-info #{tag.name}
+													| &nbsp;
+											else
+												| 未添加标签
+										td
+											img.thumImg(src="#{item.pic}", width="100px", height="22px")
+										td
+											if item.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{item._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{item._id}")
+	script(src="/js/webstarList.js", defer="defer")

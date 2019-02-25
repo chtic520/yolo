@@ -1,0 +1,31 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_media.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					.platformTab.row
+						if platform == 'wechat'
+							div.platform-item.active
+								h3: span 微信
+						else
+							div.platform-item
+								h3: a(href="/wemedia/wechat") 微信
+						if platform == 'webo'
+							div.platform-item.active
+								h3: span 微博
+						else
+							div.platform-item
+								h3: a(href="/wemedia/webo") 微博
+						if platform == 'wesite'
+							div.platform-item.active
+								h3: span 网站媒体
+						else
+							div.platform-item
+								h3: a(href="/wemedia/wesite") 网站媒体
+		div.body-content
+			block bodycontent
+	script(src="/js/front.js", defer="defer")

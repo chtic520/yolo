@@ -1,0 +1,103 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_news.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					h3
+						span.icon-news 最新资讯
+			div.section-category
+				.container
+					div.category-box
+						if keyword == 1
+							a.first.active
+								span 全部
+						else
+							a.first(href="/news")
+								span 全部
+						each cate in category
+							if keyword.name == cate.name
+								a.active
+									span #{cate.name}
+							else
+								a(href="/news/search?category=#{cate._id}&page=0")
+									span #{cate.name}
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.news-list
+			div.section-body
+				div.container
+					div.section-display-box
+						each inew, index in news
+							if index == 0
+								div.item-list.item-12
+									div.row.first
+										div.news-pic
+											img(src="#{inew.pic}")
+										div.news-info
+											h3 #{inew.title}
+											div
+												a(href="/news/#{inew._id}")!=inew.content
+											a.read-all(href="/news/#{inew._id}") 阅读全文 >
+							else
+								div.item-list.item-12
+									div.row
+										div.news-pic
+											img(src="#{inew.pic}")
+										div.news-info
+											h3 #{inew.title}
+											div
+												a(href="/news/#{inew._id}")!=inew.content
+											a.read-all(href="/news/#{inew._id}") 阅读全文 >
+		div.section-pagination
+			.container
+				div.pagination
+					- if(keyword == 1){
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/news?page=#{currentPage - 1}") <
+						- }
+					- }else{
+						- if(currentPage == 0){
+								a.pre.disabled <
+						- }else{
+								a.pre(href="/news/search?category=#{keyword._id}&page=#{currentPage - 1}") <
+						- }
+					- }
+					- for(var i = 0; i < totalPage; i++){
+						- if(currentPage == i){
+								a.active
+									span #{currentPage + 1}
+						- }else{
+								if keyword == 1
+									a(href="/news?page=#{i}")
+										span #{i + 1}
+								else
+									a(href="/news/search?category=#{keyword._id}&page=#{i}")
+										span #{i + 1}
+						- }
+					- }
+					- if(keyword == 1){
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/news?page=#{currentPage + 1}") >
+						- }
+					- }else{
+						- if(currentPage == totalPage - 1){
+								a.next.disabled >
+						- }else{
+								a.next(href="/news/search?category=#{keyword._id}&page=#{currentPage + 1}") >
+						- }
+					- }
+	script(src="/js/front.js", defer="defer")
+	script(src="/js/news.js", defer="defer")

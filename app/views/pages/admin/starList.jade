@@ -1,0 +1,58 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 舞美设备列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/star/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/star/update/") 修改
+								a.btn.btn-info.btn-flat.btn-xs#tagManage(href="/admin/star/category") 标签管理
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#starTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 名字（艺名）
+									th 作品
+									th 标签
+									th 背景图片
+									th 添加时间
+									th 首页展示
+							tbody.datalist
+								each item in star
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td #{item.works}
+										td
+											if item.category && item.category.length > 0
+												each tag in item.category
+													span.label.label-info #{tag.name}
+													| &nbsp;
+											else
+												| 未添加标签
+										td
+											img.thumImg(src="#{item.pic}", width="100px", height="22px")
+										td #{moment(item.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+										td
+											if item.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{item._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{item._id}")
+	script(src="/js/starList.js", defer="defer")

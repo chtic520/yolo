@@ -1,0 +1,75 @@
+.wrapper
+	header.main-header
+		a.logo(href="/")
+			span.logo-lg 有乐后台
+		nav.navbar.navbar-static-top
+			a.sidebar-toggle(href="#",data-toggle="offcanvas")
+			.navbar-custom-menu
+				ul.nav.navbar-nav
+					li.dropdown.notifications-menu
+						a.dropdown-toggle(href="#",data-toggle="dropdown")
+							i.fa.fa-envelope-o
+							span.label.label-warning 10
+						ul.dropdown-menu
+							li.header 你有10个信息
+					li.dropdown.user.user-menu
+						a.dropdown-toggle(href="#",data-toggle="dropdown")
+							if user
+								span.hidden-xs #{user.name}
+						ul.dropdown-menu
+							li
+								ul.menu
+									li
+										a(href="#") 修改密码
+									li
+										a(href="/logout") 注销
+	aside.main-sidebar
+		section.sidebar
+			ul.sidebar-menu
+				li.header 导航菜单
+				li.side-link.active
+					a(data-href="/admin/index")
+						i.fa.fa-circle-o.text-yellow
+						span 首页
+				li.side-link
+					a(data-href="/admin/cases/list")
+						i.fa.fa-circle-o.text-yellow
+						span 创意策划
+				li.side-link
+					a(data-href="/admin/users/list")
+						i.fa.fa-circle-o.text-yellow
+						span 用户管理
+				li.side-link
+					a(data-href="/admin/star/list")
+						i.fa.fa-circle-o.text-yellow
+						span 明星资源
+				li.side-link
+					a(data-href="/admin/webstar/list")
+						i.fa.fa-circle-o.text-yellow
+						span 网红推荐
+				li.side-link
+					a(data-href="/admin/wemedia/list")
+						i.fa.fa-circle-o.text-yellow
+						span 新微媒体
+				li.side-link
+					a(data-href="/admin/stage/list")
+						i.fa.fa-circle-o.text-yellow
+						span 舞美设备
+				li.side-link
+					a(data-href="/admin/news/list")
+						i.fa.fa-circle-o.text-yellow
+						span 最新资讯
+				li.side-link
+					a(data-href="/admin/connectus/view")
+						i.fa.fa-circle-o.text-yellow
+						span 联系我们
+	div.content-wrapper
+		block content
+	footer.main-footer
+		.pull-right.hidden-xs xxxxxx
+		strong
+			| Copyright &copy; 2016
+			a(href="#")  Company 
+			| All right reserved
+
+

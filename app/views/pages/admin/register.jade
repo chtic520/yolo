@@ -1,0 +1,27 @@
+extends ../../userLayout
+
+block content
+	div.register-box
+		div.register-logo
+			a(href="/") LOGO
+		div.register-box-body(style="margin-bottom: 10px;")
+			p.login-box-msg 注册
+			form
+				div.form-group.has-feedback
+					input.form-control#username(type="text", autofocus="autofocus", placeholder="登录名（5-12位，字母开头，不能包含非法字符）", name="user[name]")
+					span.fa.fa-user.form-control-feedback
+				div.form-group.has-feedback
+					input.form-control#password(type="password", placeholder="密码（6-30位）", name="user[password]")
+					span.fa.fa-lock.form-control-feedback
+				div.form-group.has-feedback
+					input.form-control#confirmPW(type="password", placeholder="再次输入密码")
+					span.fa.fa-lock.form-control-feedback
+				div.row
+					div.col-xs-4.col-xs-offset-8
+						button.btn.btn-primary.btn-block.btn-flat#register(type="submit") 注册
+			div.row(style="margin-top: 10px;")
+				div.col-xs-12
+					a(href="/login") 已有账号，请登录
+		div#msg
+	script(src="/js/register.js", defer="defer")
+		

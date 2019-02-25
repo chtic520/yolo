@@ -1,0 +1,47 @@
+div.header.bg
+	div.container
+		div.header-logo
+			a(href="/")
+				img(src="/images/logo.png", width="180")
+		div.header-nav
+			ul.nav-container
+				li
+					if type == "index"
+						a.active(href="/") 首页
+					else
+						a(href="/") 首页
+				li
+					if type == "cases"
+						a.active(href="/cases") 案例展示
+					else
+						a(href="/cases") 案例展示
+				li
+					if type == "star"
+						a.active(href="/star") 明星资源
+					else
+						a(href="/star") 明星资源
+				li
+					if type == "webstar"
+						a.active(href="/webstar") 网红推荐
+					else
+						a(href="/webstar") 网红推荐
+				li
+					if type == "wemedia"
+						a.active(href="/wemedia") 新微媒体
+					else
+						a(href="/wemedia/wechat") 新微媒体
+				li
+					if type == "stage"
+						a.active(href="/stage") 舞美设备
+					else
+						a(href="/stage") 舞美设备
+				li
+					if type == "news"
+						a.active(href="/news") 最新资讯
+					else
+						a(href="/news") 最新资讯
+				li
+					if type == "connectus"
+						a.active(href="/connectus") 联系我们
+					else
+						a(href="/connectus") 联系我们

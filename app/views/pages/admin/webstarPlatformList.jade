@@ -1,0 +1,50 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/webstar/list") 网红资源
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 网红平台列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/webstar/platform/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/webstar/platform/update/") 修改
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						table#webstarTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 平台名称
+									th 网红
+									th 背景图片
+									th 创建时间
+							tbody.datalist
+								each item in platform
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td
+											if item.webstar && item.webstar.length > 0
+												each webstar in item.webstar
+													span.label.label-info #{webstar.name}
+													| &nbsp;
+											else
+												| 未添加媒体
+										td
+											img.thumImg(src="#{item.pic}", width="100px", height="22px")
+										td #{moment(item.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+	script(src="/js/webstarPlatformList.js", defer="defer")

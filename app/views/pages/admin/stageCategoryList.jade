@@ -1,0 +1,56 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/stage/list") 舞美设备
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title #{title}
+						.box-tools
+							.btn-toolbar
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/stage/category/") 修改
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#stageTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 类型名称
+									th 设备
+									th 图片
+									th 创建时间
+									th 首页展示
+							tbody.datalist
+								each tag in category
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=tag._id)
+										td #{tag.name}
+										td
+											if tag.stage && tag.stage.length > 0
+												each item in tag.stage
+													span.label.label-info #{item.name}
+													| &nbsp;
+											else
+												| 未添加设备
+										td
+											img.thumImg(src="#{tag.pic}", width="100px", height="22px")
+										td #{moment(tag.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+										td
+											if tag.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{tag._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{tag._id}")
+	script(src="/js/stageCategoryList.js", defer="defer")

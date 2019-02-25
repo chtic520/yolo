@@ -1,0 +1,39 @@
+extends ../../layout
+
+block content
+	div.front-banner
+		img.img-responsive(src="/images/banner_contact.jpg")
+	div.body
+		div.body-top
+			div.section-top
+				.container
+					h3
+						span.icon-phone #{title}
+			div.section-nav
+				.container
+					p
+						| 您当前所在位置：
+						a(href="/") 首页
+						|  > 
+						span #{title}
+		div.section.news-detail-container
+			div.section-body
+				div.container
+					div.section-display-box
+						div.connectus
+							p
+								span.title.tel 电话:
+								span=connectus.tel
+							p
+								span.title.address 地址:
+								span=connectus.address
+							p.last
+								span.title.email 邮箱:
+								span=connectus.email
+							div.connect-bg
+							div.connect-title-box
+								div.line
+								h3.connect-title 关于我们
+								div.line
+							div.connect-content!=connectus.content
+	script(src="/js/front.js", defer="defer")

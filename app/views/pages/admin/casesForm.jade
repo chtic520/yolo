@@ -1,0 +1,111 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/cases/list") 创意策划
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/cases/new")
+				if cases._id
+					input(type="hidden", name="cases[_id]", value=cases._id)
+				.form-group
+					label.col-sm-2.control-label *案例名称
+					.col-sm-10
+						input.form-control#title(type="text", placeholder="输入名称", name="cases[title]", value=cases.title)
+				.form-group
+					label.col-sm-2.control-label 展示次数
+					.col-sm-10
+						input.form-control#displaytimes(type="text", placeholder="展示次数", name="cases[displaytimes]", value=cases.displaytimes)
+				.form-group
+					label.col-sm-2.control-label 投放平台
+					.col-sm-10
+						input.form-control#platform(type="text", placeholder="输入平台", name="cases[platform]", value=cases.platform)
+				.form-group
+					label.col-sm-2.control-label *适合场景
+					.col-sm-10
+						input.form-control#scene(type="text", placeholder="输入场景", name="cases[scene]", value=cases.scene)
+				.form-group
+					label.col-sm-2.control-label 投放形式
+					.col-sm-10
+						input.form-control#form(type="text", placeholder="输入投放形式", name="cases[form]", value=cases.form)
+				.form-group
+					label.col-sm-2.control-label *标签
+					.col-sm-10
+						div.input-group
+							div.form-control#tagBox
+								if cases.category && cases.category.length > 0
+									each tag in cases.category
+										span.label.label-info
+											| #{tag.name}
+											input(type="hidden" name="cases[category]" value="#{tag._id}")
+										| &nbsp;
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#tagModal") 添加
+				.form-group
+					label.col-sm-2.control-label *图片
+					.col-sm-10
+						div.input-group
+							input.form-control#pic(type="text", placeholder="输入图片地址", name="cases[pic]", value=cases.pic, readonly)
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#uploadModal") 上传
+				.form-group
+					label.col-sm-2.control-label *案例特色
+					.col-sm-10
+						textarea.form-control#summary(placeholder="输入内容", rows="3", name="cases[summary]") #{cases.summary}
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 录入
+	#uploadModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 上传图片
+				.modal-body
+					.row
+						.col-sm-12
+							div#thethum.thum-img
+								div.thum-img-body
+									span.thum-img-icon.has-img
+										img#imgupload
+									div.thum-img-info
+										span.thum-img-name
+											i.fa.fa-camera
+											span#imgtitle  图片标题
+										span#imgsize.thum-img-size 图片大小
+								.btn-group.btn-group-justified
+									.btn-group
+										button.btn.btn-success.btn-flat.btn-sm#addfile 选择文件
+									.btn-group
+										button.btn.btn-warning.btn-flat.btn-sm#uploadBtn(type="button") 开始上传
+				.modal-footer
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	#tagModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 选择标签
+				.modal-body
+					div.row#tagList
+						if category && category.length > 0
+							each item in category
+								div.col-sm-2
+									label
+										input(type="checkbox" class="tag" id="#{item._id}")
+										| &nbsp;
+										span #{item.name}
+						div.col-sm-2
+							button.btn.btn-xs.btn-info.btn-flat#addTag
+								i.fa.fa-plus
+						if !category || category.length == 0
+							div.col-sm-10.no-tag
+								p.text-danger 还没有标签，请按 “+” 添加
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#t(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/libs/admin-lte/plugins/ckeditor/ckeditor.js")
+	script(src="/js/casesForm.js", defer="defer")

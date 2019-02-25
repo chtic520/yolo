@@ -1,0 +1,103 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/news/list") 最新资讯
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/news/new")
+				if news._id
+					input(type="hidden", name="news[_id]", value=news._id)
+				.form-group
+					label.col-sm-2.control-label *标题
+					.col-sm-10
+						input.form-control#title(type="text", placeholder="输入标题", name="news[title]", value=news.title)
+				.form-group
+					label.col-sm-2.control-label 副标题
+					.col-sm-10
+						input.form-control#subtitle(type="text", placeholder="副标题", name="news[subtitle]", value=news.subtitle)
+				.form-group
+					label.col-sm-2.control-label 作者
+					.col-sm-10
+						input.form-control#author(type="text", placeholder="输入作者", name="news[author]", value=news.author)
+				.form-group
+					label.col-sm-2.control-label *标签
+					.col-sm-10
+						div.input-group
+							div.form-control#tagBox
+								if news.category && news.category.length > 0
+									each tag in news.category
+										span.label.label-info
+											| #{tag.name}
+											input(type="hidden" name="news[category]" value="#{tag._id}")
+										| &nbsp;
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#tagModal") 添加
+				.form-group
+					label.col-sm-2.control-label *封面图
+					.col-sm-10
+						div.input-group
+							input.form-control#pic(type="text", placeholder="输入图片地址", name="news[pic]", value=news.pic, readonly)
+							span.input-group-btn
+								button.btn.btn-info.btn-flat(type="button", data-toggle="modal", data-target="#uploadModal") 上传
+				.form-group
+					label.col-sm-2.control-label *资讯内容
+					.col-sm-10
+						textarea.form-control#content(placeholder="输入内容", rows="10", name="news[content]") #{news.content}
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 录入
+	#uploadModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 上传图片
+				.modal-body
+					.row
+						.col-sm-12
+							div#thethum.thum-img
+								div.thum-img-body
+									span.thum-img-icon.has-img
+										img#imgupload
+									div.thum-img-info
+										span.thum-img-name
+											i.fa.fa-camera
+											span#imgtitle  图片标题
+										span#imgsize.thum-img-size 图片大小
+								.btn-group.btn-group-justified
+									.btn-group
+										button.btn.btn-success.btn-flat.btn-sm#addfile 选择文件
+									.btn-group
+										button.btn.btn-warning.btn-flat.btn-sm#uploadBtn(type="button") 开始上传
+				.modal-footer
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	#tagModal.modal.fade
+		.modal-dialog
+			.modal-content
+				.modal-header 选择标签
+				.modal-body
+					div.row#tagList
+						if category && category.length > 0
+							each item in category
+								div.col-sm-2
+									label
+										input(type="checkbox" class="tag" id="#{item._id}")
+										| &nbsp;
+										span #{item.name}
+						div.col-sm-2
+							button.btn.btn-xs.btn-info.btn-flat#addTag
+								i.fa.fa-plus
+						if !category || category.length == 0
+							div.col-sm-10.no-tag
+								p.text-danger 还没有标签，请按 “+” 添加
+				.modal-footer
+					button.btn.btn-success.btn-flat.btn-sm#t(type="button") 确认
+					button.btn.btn-default.btn-flat.btn-sm(type="button", data-dismiss="modal") 关闭
+	script(src="/libs/admin-lte/plugins/ckeditor/ckeditor.js")
+	script(src="/js/newsForm.js", defer="defer")

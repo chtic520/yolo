@@ -1,0 +1,13 @@
+doctype
+html(style="font-size: 15px;")
+	head
+		meta(charset="utf-8")
+		title #{title}
+		<link rel="shortcut icon" href="[ICO 文件 URL]" />
+		include ./includes/head
+	body
+		include ./includes/header
+		block content
+		include ./includes/footer
+	script(src="/libs/jquery/dist/jquery.min.js")
+	script(src="/libs/bootstrap/dist/js/bootstrap.min.js")

@@ -1,0 +1,61 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 新微媒体列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/wemedia/new") 新增
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/wemedia/update/") 修改
+								a.btn.btn-info.btn-flat.btn-xs#tagManage(href="/admin/wemedia/category") 类型管理
+								a.btn.btn-info.btn-flat.btn-xs#platformManage(href="/admin/wemedia/platform/list") 平台管理
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#wemediaTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 媒体名称
+									th 粉丝数
+									th icon
+									th 标签
+									th 所属平台
+									th 添加时间
+							tbody.datalist
+								each item in wemedia
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td #{item.funs}
+										td
+											img.thumImg(src="#{item.icon}", width="100px", height="22px")
+										td
+											if item.category && item.category.length > 0
+												each tag in item.category
+													span.label.label-info #{tag.name}
+													| &nbsp;
+											else
+												| 无标签
+										td
+											if item.platform && item.platform.length > 0
+												each platform in item.platform
+													span.label.label-info #{platform.name}
+													| &nbsp;
+											else
+												| 未分类
+										td #{moment(item.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+	script(src="/js/wemediaList.js", defer="defer")

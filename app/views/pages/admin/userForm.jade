@@ -1,0 +1,32 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/users/list") 用户管理
+			li.active=title
+	section.content
+		.container
+			form#addForm.form-horizontal(role="form", method="post", action="/admin/users/new")
+				.form-group
+					label.col-sm-2.control-label *用户名
+					.col-sm-10
+						input.form-control#name(type="text", placeholder="输入名称", name="user[name]")
+				.form-group
+					label.col-sm-2.control-label *密码
+					.col-sm-10
+						input.form-control#password(type="password", placeholder="密码", name="user[password]")
+				.form-group
+					label.col-sm-2.control-label 权限值
+					.col-sm-10
+						input.form-control#role(type="text", placeholder="1-50", name="user[role]")
+				.form-group
+					.col-sm-offset-2.col-sm-10
+						button.btn.btn-success.btn-flat#sub(type="submit") 保存
+						a.btn.btn-warning.btn-flat.pull-right(href="/admin/users/list") 取消
+	script(src="/js/usersForm.js", defer="defer")

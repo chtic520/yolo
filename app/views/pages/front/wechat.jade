@@ -1,0 +1,89 @@
+extends wemedia
+
+block bodycontent
+	div.section-category
+		.container
+			div.category-box2(style="background-color: transparent; margin-bottom: 0;")
+				span 分类：
+				if keyword == 1
+					a.first.active
+						span 不限
+				else
+					a.first(href="/wemedia/wechat")
+						span 不限
+				each cate in category
+					if keyword.name == cate.name
+						a.active
+							span #{cate.name}
+					else
+						a(href="/wemedia/wechat/search?category=#{cate._id}&page=0")
+							span #{cate.name}
+	div.section-nav
+		.container
+			p
+				| 您当前所在位置：
+				a(href="/") 首页
+				|  > 
+				span 新微媒体
+				|  > 
+				span 微信
+	div.section-table
+		.container
+			table.table.wechat
+				thead
+					tr
+						th: span 账号
+						th: span 粉丝数
+						th: span 头条阅读
+						th: span 二条阅读
+				tbody
+					each item in wechat
+						tr
+							td
+								img.img-circle(src="#{item.pic}", style="width: 90px;height:90px;margin-right:20px;")
+								span #{item.name}
+							td #{item.funs}
+							td #{item.firstRead}
+							td #{item.secondRead}
+	div.section-pagination
+		.container
+			div.pagination
+				- if(keyword == 1){
+					- if(currentPage == 0){
+							a.pre.disabled <
+					- }else{
+							a.pre(href="/wemedia/wechat?page=#{currentPage - 1}") <
+					- }
+				- }else{
+					- if(currentPage == 0){
+							a.pre.disabled <
+					- }else{
+							a.pre(href="/wemedia/wechat/search?category=#{keyword._id}&page=#{currentPage - 1}") <
+					- }
+				- }
+				- for(var i = 0; i < totalPage; i++){
+					- if(currentPage == i){
+							a.active
+								span #{currentPage + 1}
+					- }else{
+							if keyword == 1
+								a(href="/wemedia/wechat?page=#{i}")
+									span #{i + 1}
+							else
+								a(href="/wemedia/wechat/search?category=#{keyword._id}&page=#{i}")
+									span #{i + 1}
+					- }
+				- }
+				- if(keyword == 1){
+					- if(currentPage == totalPage - 1){
+							a.next.disabled >
+					- }else{
+							a.next(href="/wemedia/wechat?page=#{currentPage + 1}") >
+					- }
+				- }else{
+					- if(currentPage == totalPage - 1){
+							a.next.disabled >
+					- }else{
+							a.next(href="/wemedia/wechat/search?category=#{keyword._id}&page=#{currentPage + 1}") >
+					- }
+				- }

@@ -1,0 +1,59 @@
+extends ../../adminContentLayout
+
+block content
+	section.content-header
+		ol.breadcrumb
+			li
+				i.fa.fa-dashboard
+				| &nbsp;&nbsp;
+				a.text-info(href="/admin/index") 首页
+			li
+				a.text-info(href="/admin/webstar/list") 网红资源
+			li
+				a.text-info(href="/admin/webstar/category") 网红标签
+			li.active=title
+	section.content
+		.row
+			.col-xs-12
+				.box
+					.box-header.with-border
+						h3.box-title 网红标签分类列表
+						.box-tools
+							.btn-toolbar
+								a.btn.btn-success.btn-flat.btn-xs#add(href="/admin/webstar/categorytag/new") 新增分类
+								button.btn.btn-warning.btn-flat.btn-xs#update(type="button", data-href="/admin/webstar/categorytag/update/") 更新
+								button.btn.btn-danger.btn-flat.btn-xs#del 删除
+					.box-body
+						input#onItems(type="hidden", value="#{onitems}")
+						table#webstarTable.table.table-hover.table-bordered.table-condensed
+							thead
+								tr
+									th(width=22)
+										input#allCheck(type="checkbox", class="i-checks")
+									th 分类名称
+									th 标签
+									th icon
+									th 创建时间
+									th 前台展示
+							tbody.datalist
+								each item in tagCategory
+									tr
+										td
+											input(type="checkbox", class="i-checks", value=item._id)
+										td #{item.name}
+										td
+											if item.tag && item.tag.length > 0
+												each tag in item.tag
+													span.label.label-info #{tag.name}
+													| &nbsp;
+											else
+												| 未添加标签
+										td
+											img.thumImg(src="#{item.pic}", width="100px", height="22px")
+										td #{moment(item.meta.updateAt).format('YYYY/MM/DD HH:mm:ss')}
+										td
+											if item.displayindex
+												input.i-switch(type="checkbox", checked, data-size="mini", data-on-color="success", data-id="#{item._id}")
+											else
+												input.i-switch(type="checkbox", data-size="mini", data-on-color="success", data-id="#{item._id}")
+	script(src="/js/webstarTagCatList.js", defer="defer")
